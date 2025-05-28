@@ -46,6 +46,17 @@ export default function Home() {
       if (userDoc.exists()) {
         setStatus("success");
       } else {
+        // Log to newWebsiteSignups collection
+        await addDoc(collection(db, "newWebsiteSignups"), {
+          email: user.email,
+          uid: user.uid,
+          signInTime: serverTimestamp(),
+        });
+        // Delete the Auth user immediately if not found in Firestore
+        if (auth.currentUser) {
+          await deleteUser(auth.currentUser);
+        }
+        await signOut(auth);
         setStatus("notfound");
       }
     } catch (err) {
