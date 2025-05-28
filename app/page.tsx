@@ -68,6 +68,16 @@ export default function Home() {
     }
   };
 
+  const handleDeleteData = async () => {
+    setLoading(true);
+    try {
+      // Placeholder: implement actual data deletion logic here
+      alert("Your data would be deleted (functionality to be implemented).");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const isLoggedIn = status === "success";
 
   return (
@@ -104,9 +114,6 @@ export default function Home() {
       {status === "success" && (
         <>
           <p className="login-success">Welcome{userEmail ? `, ${userEmail}` : ""}!</p>
-          <button className="logout-btn" onClick={handleLogout} disabled={loading}>
-            Logout
-          </button>
           {progressLoading ? (
             <div style={{ padding: 32 }}>Loading progress...</div>
           ) : progressError ? (
@@ -125,6 +132,14 @@ export default function Home() {
               </div>
             </div>
           )}
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: 24 }}>
+            <button className="logout-btn" onClick={handleLogout} disabled={loading}>
+              Logout
+            </button>
+            <button className="logout-btn" onClick={handleDeleteData} disabled={loading}>
+              Delete My Data
+            </button>
+          </div>
         </>
       )}
       {status === "notfound" && (
