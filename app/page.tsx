@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { auth, db } from "../lib/firebase";
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { GoogleAuthProvider, signInWithPopup, signOut, deleteUser, reauthenticateWithPopup } from "firebase/auth";
+import { doc, getDoc, deleteDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function Home() {
   const [status, setStatus] = useState<string | null>(null);
@@ -69,10 +69,47 @@ export default function Home() {
   };
 
   const handleDeleteData = async () => {
+    if (!auth.currentUser) return;
+    if (!window.confirm("Are you sure you want to delete your account? This cannot be undone.")) return;
     setLoading(true);
     try {
-      // Placeholder: implement actual data deletion logic here
-      alert("Your data would be deleted (functionality to be implemented).");
+      // 0. Store deleted user info
+      const user = auth.currentUser;
+      if (user) {
+        await addDoc(collection(db, "deletedUsers"), {
+          email: user.email,
+          uid: user.uid,
+          deletedAt: serverTimestamp(),
+        });
+      }
+      // 1. Delete user data from Firestore
+      await deleteDoc(doc(db, "users", auth.currentUser.uid));
+      // (Add more deletes here if you have other user data elsewhere)
+
+      // 2. Try to delete the Firebase Auth account
+      try {
+        await deleteUser(auth.currentUser);
+      } catch (error: any) {
+        if (error.code === "auth/requires-recent-login") {
+          // Re-authenticate and try again
+          const provider = new GoogleAuthProvider();
+          await reauthenticateWithPopup(auth.currentUser, provider);
+          await deleteUser(auth.currentUser);
+        } else {
+          throw error;
+        }
+      }
+
+      // 3. Sign out and reload/redirect
+      await signOut(auth);
+      setStatus(null);
+      setUserEmail(null);
+      setUsage(null);
+      setLevel(null);
+      alert("Your account and data have been deleted.");
+      window.location.reload();
+    } catch (err: any) {
+      alert("Failed to delete account: " + (err?.message || err));
     } finally {
       setLoading(false);
     }
