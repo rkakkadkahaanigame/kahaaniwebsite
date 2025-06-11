@@ -4,8 +4,8 @@ export default function TermsOfService() {
   return (
     <div className="privacy-bg">
       <div className="privacy-card">
-        <h1>Terms of Service</h1>
-        <p className="privacy-date">Last updated: {new Date().toLocaleDateString()}</p>
+        <h1 className="text-center">Terms of Service</h1>
+        <p className="privacy-date text-center">Last updated: {new Date().toLocaleDateString()}</p>
         <section>
           <h2>1. Acceptance of Terms</h2>
           <p>

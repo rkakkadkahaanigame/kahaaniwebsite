@@ -4,8 +4,8 @@ export default function PrivacyPolicy() {
   return (
     <div className="privacy-bg">
       <div className="privacy-card">
-        <h1>Privacy Policy</h1>
-        <p className="privacy-date">Last updated: {new Date().toLocaleDateString()}</p>
+        <h1 className="text-center">Privacy Policy</h1>
+        <p className="privacy-date text-center">Last updated: {new Date().toLocaleDateString()}</p>
         <section>
           <h2>1. Introduction</h2>
           <p>
