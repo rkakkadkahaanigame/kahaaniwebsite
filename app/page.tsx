@@ -4,9 +4,15 @@ import { useState, useEffect } from "react";
 import { auth, db } from "../lib/firebase";
 import { GoogleAuthProvider, signInWithPopup, signOut, deleteUser, reauthenticateWithPopup } from "firebase/auth";
 import { doc, getDoc, deleteDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
+import FeaturesSection from "./components/FeaturesSection";
+import AboutSection from "./components/AboutSection";
+import ScreenshotsSection from "./components/ScreenshotsSection";
+import Footer from "./components/Footer";
 
 export default function Home() {
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<"idle" | "success" | "error" | "notfound">("idle");
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [usage, setUsage] = useState<any>(null);
@@ -33,36 +39,14 @@ export default function Home() {
     }
   }, [status]);
 
-  const handleGoogleLogin = async () => {
-    setLoading(true);
-    setStatus(null);
-    setUserEmail(null);
+  const handleGoogleSignIn = async () => {
+    setStatus("idle");
     try {
       const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      setUserEmail(user.email || null);
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (userDoc.exists()) {
-        setStatus("success");
-      } else {
-        // Log to newWebsiteSignups collection
-        await addDoc(collection(db, "newWebsiteSignups"), {
-          email: user.email,
-          uid: user.uid,
-          signInTime: serverTimestamp(),
-        });
-        // Delete the Auth user immediately if not found in Firestore
-        if (auth.currentUser) {
-          await deleteUser(auth.currentUser);
-        }
-        await signOut(auth);
-        setStatus("notfound");
-      }
+      await signInWithPopup(auth, provider);
+      setStatus("success");
     } catch (err) {
       setStatus("error");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -70,7 +54,7 @@ export default function Home() {
     setLoading(true);
     try {
       await signOut(auth);
-      setStatus(null);
+      setStatus("idle");
       setUserEmail(null);
       setUsage(null);
       setLevel(null);
@@ -113,7 +97,7 @@ export default function Home() {
 
       // 3. Sign out and reload/redirect
       await signOut(auth);
-      setStatus(null);
+      setStatus("idle");
       setUserEmail(null);
       setUsage(null);
       setLevel(null);
@@ -129,77 +113,15 @@ export default function Home() {
   const isLoggedIn = status === "success";
 
   return (
-    <div className="modern-bg">
-      <h1 className="main-heading">Welcome to Kahaani Game</h1>
-      <div className="main-content">
-        {!isLoggedIn && (
-          <div className="login-block">
-            <a href="https://play.google.com/store/apps/details?id=com.kahaani.app" target="_blank" rel="noopener noreferrer" className="play-badge-link">
-              <img
-                src="/google-play-badge.png"
-                alt="Get it on Google Play"
-                className="play-badge"
-              />
-            </a>
-            <button
-              className="google-login-btn"
-              onClick={handleGoogleLogin}
-              disabled={loading}
-              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", marginTop: "2.5rem" }}
-            >
-              <img
-                src="/btn_google_signin_dark_normal_web.png"
-                alt="Sign in with Google"
-                style={{ height: 48 }}
-              />
-            </button>
-          </div>
-        )}
-        {status === "success" && (
-          <>
-            <p className="login-success">Welcome{userEmail ? `, ${userEmail}` : ""}!</p>
-            {progressLoading ? (
-              <div style={{ padding: 32 }}>Loading progress...</div>
-            ) : progressError ? (
-              <div style={{ padding: 32, color: '#b71c1c' }}>{progressError}</div>
-            ) : (
-              <div style={{ maxWidth: 480, margin: "40px auto", background: "#fffbe9", borderRadius: 12, boxShadow: "0 2px 12px rgba(0,0,0,0.07)", padding: 32 }}>
-                <h2 style={{ color: "#7a4c15", marginBottom: 24 }}>Today's Progress</h2>
-                <div style={{ marginBottom: 32 }}>
-                  <div>Episodes Completed: <b>{usage?.unitsCompletedToday ?? 0}</b></div>
-                  <div>New Episodes Completed: <b>{usage?.newLevelsCompletedToday ?? 0}</b></div>
-                </div>
-                <h2 style={{ color: "#7a4c15", marginBottom: 24 }}>Overall Progress</h2>
-                <div>
-                  <div>Current Season: <b>{level?.season ?? "-"}</b></div>
-                  <div>Current Episode: <b>{level?.episode ?? "-"}</b></div>
-                </div>
-              </div>
-            )}
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: 24 }}>
-              <button className="logout-btn" onClick={handleLogout} disabled={loading}>
-                Logout
-              </button>
-              <button className="logout-btn" onClick={handleDeleteData} disabled={loading}>
-                Delete My Data
-              </button>
-            </div>
-          </>
-        )}
-        {status === "notfound" && (
-          <p className="login-error">
-            Sorry, no user found – Download the Kahaani game here: <a href="https://play.google.com/store/apps/details?id=com.kahaani.app" target="_blank" rel="noopener noreferrer">Android Download</a>
-          </p>
-        )}
-        {status === "error" && (
-          <p className="login-error">Login failed. Please try again.</p>
-        )}
-      </div>
-      <div className="footer-links">
-        <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-        |
-        <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-      </div>
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header />
+      <main className="flex-1 flex flex-col items-center justify-center pt-32 px-4">
+        <HeroSection onGoogleSignIn={handleGoogleSignIn} status={status} />
+        <FeaturesSection />
+        <AboutSection />
+        <ScreenshotsSection />
+      </main>
+      <Footer />
       <style jsx>{`
         .modern-bg {
           min-height: 100vh;
