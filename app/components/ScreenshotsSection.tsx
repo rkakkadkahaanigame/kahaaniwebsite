@@ -9,7 +9,7 @@ export default function ScreenshotsSection() {
   const next = () => setCurrent((prev) => (prev === screenshots.length - 1 ? 0 : prev + 1));
 
   return (
-    <section className="w-full max-w-3xl mx-auto mb-12">
+    <section className="w-full max-w-3xl mx-auto overflow-hidden pb-24" style={{ maxHeight: 'calc(100vh - 160px)' }}>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
         <div className="relative flex flex-col items-center">
           <div className="flex flex-row items-center justify-center w-full">
@@ -36,7 +36,7 @@ export default function ScreenshotsSection() {
               &#8594;
             </button>
           </div>
-          <div className="flex justify-center mt-4 gap-2">
+          <div className="flex justify-center mt-2 gap-2">
             {screenshots.map((_, idx) => (
               <span
                 key={idx}
