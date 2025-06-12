@@ -18,10 +18,19 @@ export default function Header() {
   };
 
   return (
-    <nav className="w-full flex items-center justify-between px-8 py-4 bg-white/80 shadow-md fixed top-0 left-0 z-40 backdrop-blur">
-      <div className="flex items-center gap-6 ml-2">
-        <Link href="/" className="text-lg font-semibold text-[#7a4c15] px-4 py-2 rounded-full transition-all hover:bg-[#f7ecd7] hover:text-[#a86c2c]">Home</Link>
-        <Link href="/about" className="text-lg font-semibold text-[#7a4c15] px-4 py-2 rounded-full transition-all hover:bg-[#f7ecd7] hover:text-[#a86c2c]">About Us</Link>
+    <nav className="w-full flex items-center justify-between px-8 py-4 shadow-md fixed top-0 left-0 z-40 backdrop-blur" style={{ backgroundColor: '#FEEDD2' }}>
+      <div className="flex items-center ml-2">
+        <Link href="/" className="flex items-center mr-4">
+          <img
+            src="/logoHD.png"
+            alt="KahaaNi Game Logo"
+            className="h-12 w-auto"
+          />
+        </Link>
+      </div>
+      <div className="flex items-center gap-6 absolute" style={{ left: '25%' }}>
+        <Link href="/" className="text-base font-medium text-[#7a4c15] px-4 py-2 rounded-full transition-all hover:bg-[#f7ecd7] hover:text-[#a86c2c]" style={{ backgroundColor: '#FEEDD2' }}>Home</Link>
+        <Link href="/about" className="text-base font-medium text-[#7a4c15] px-4 py-2 rounded-full transition-all hover:bg-[#f7ecd7] hover:text-[#a86c2c]" style={{ backgroundColor: '#FEEDD2' }}>About Us</Link>
       </div>
       <button
         onClick={handleGoogleSignIn}
