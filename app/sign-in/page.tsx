@@ -18,10 +18,20 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <button onClick={handleGoogleSignIn} className="focus:outline-none">
-        <img src="/btn_google_signin_dark_normal_web.png" alt="Sign in with Google" className="h-10" />
-      </button>
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-md mx-auto bg-white/90 rounded-xl shadow-lg p-8 text-center">
+        <h2 className="text-2xl font-bold text-[#7a4c15] mb-2">Sign-in to manage your account</h2>
+        
+        <div className="my-8">
+          <button onClick={handleGoogleSignIn} className="focus:outline-none hover:scale-105 transition-transform">
+            <img src="/btn_google_signin_dark_normal_web.png" alt="Sign in with Google" className="h-12 mx-auto" />
+          </button>
+        </div>
+        
+        <p className="text-sm text-gray-500 mt-6">
+          <em>Note: Only existing users can sign-in here.</em>
+        </p>
+      </div>
     </div>
   );
 } 
