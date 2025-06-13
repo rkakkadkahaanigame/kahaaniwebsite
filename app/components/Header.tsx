@@ -69,22 +69,31 @@ export default function Header() {
             className="h-8 w-auto sm:h-12"
           />
         </Link>
+        {isLoggedIn && (
+          <div className="text-lg font-semibold text-[#7a4c15] ml-2">
+            My Account
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-3 sm:gap-6 sm:absolute sm:left-1/4">
-        <Link
-          href="/"
-          className={`text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all
-            ${pathname === '/' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#f7ecd7] hover:text-[#a86c2c]'}`}
-        >
-          Home
-        </Link>
-        <Link
-          href="/about"
-          className={`text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all
-            ${pathname === '/about' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#f7ecd7] hover:text-[#a86c2c]'}`}
-        >
-          About Us
-        </Link>
+        {!isLoggedIn && (
+          <>
+            <Link
+              href="/"
+              className={`text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all
+                ${pathname === '/' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#f7ecd7] hover:text-[#a86c2c]'}`}
+            >
+              Home
+            </Link>
+            <Link
+              href="/about"
+              className={`text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all
+                ${pathname === '/about' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#f7ecd7] hover:text-[#a86c2c]'}`}
+            >
+              About Us
+            </Link>
+          </>
+        )}
       </div>
       
       {!loading && (
