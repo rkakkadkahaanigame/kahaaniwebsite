@@ -39,6 +39,26 @@ a {
   text-decoration: none;
 }
 
+/* Mobile-specific styles for proper scrolling */
+@media (max-width: 768px) {
+  html, body {
+    height: auto !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Ensure mobile viewport is properly handled */
+  body {
+    min-height: 100vh;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+  
+  /* Fix for mobile Safari viewport issues */
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

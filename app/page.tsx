@@ -95,7 +95,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main 
-        className="h-full flex flex-col items-center justify-center px-4 pb-16" 
+        className="flex-1 flex flex-col items-center justify-center px-4 pb-16 overflow-y-auto md:overflow-hidden" 
       >
         {isLoading && (
           <div className="text-center py-8">

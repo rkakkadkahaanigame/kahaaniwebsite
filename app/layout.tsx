@@ -23,16 +23,12 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo.png" type="image/png" />
       </head>
-      <body className={`${inter.className} h-screen flex flex-col overflow-hidden`}>
+      <body className={`${inter.className} min-h-screen md:h-screen flex flex-col md:overflow-hidden`}>
         <Header />
         <div
-          className="flex-1 relative"
+          className="flex-1 relative bg-cover bg-center bg-no-repeat bg-scroll md:bg-fixed"
           style={{
             backgroundImage: 'url(/feature-graphic.png)',
-            backgroundSize: 'cover',
-            backgroundAttachment: 'fixed',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
             paddingTop: 'var(--header-height, 112px)',
           }}
         >
@@ -48,7 +44,7 @@ export default function RootLayout({
               zIndex: 1,
             }}
           />
-          <div className="relative z-10 h-full">
+          <div className="relative z-10 min-h-full md:h-full">
             {children}
           </div>
         </div>
