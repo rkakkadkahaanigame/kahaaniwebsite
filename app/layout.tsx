@@ -30,7 +30,9 @@ export default function RootLayout({
           style={{
             backgroundImage: 'url(/feature-graphic.png)',
             backgroundSize: 'cover',
+            backgroundAttachment: 'fixed',
             backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
             paddingTop: 'var(--header-height, 112px)',
           }}
         >
@@ -42,7 +44,7 @@ export default function RootLayout({
               right: 0,
               bottom: 0,
               background: 'white',
-              opacity: 0.9,
+              opacity: 0.95,
               zIndex: 1,
             }}
           />
