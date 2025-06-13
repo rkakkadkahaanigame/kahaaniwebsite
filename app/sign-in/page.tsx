@@ -18,7 +18,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <main className="h-full flex flex-col items-center justify-start px-4 pt-16 pb-16">
       <div className="w-full max-w-md mx-auto bg-white/90 rounded-xl shadow-lg p-8 text-center">
         <h2 className="text-2xl font-bold text-[#7a4c15] mb-2">Sign-in to manage your account</h2>
         
@@ -32,6 +32,6 @@ export default function SignIn() {
           <em>Note: Only existing users can sign-in here.</em>
         </p>
       </div>
-    </div>
+    </main>
   );
 } 

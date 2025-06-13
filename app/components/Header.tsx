@@ -2,8 +2,40 @@
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { auth } from "@/lib/firebase";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { onAuthStateChanged } from "firebase/auth";
+
+// Custom hook to get header height
+export function useHeaderHeight() {
+  const [headerHeight, setHeaderHeight] = useState(112); // Default fallback
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        const height = headerRef.current.offsetHeight;
+        setHeaderHeight(height);
+        // Set CSS custom property for use in other components
+        document.documentElement.style.setProperty('--header-height', `${height}px`);
+      }
+    };
+
+    // Initial measurement
+    updateHeaderHeight();
+
+    // Update on resize
+    window.addEventListener('resize', updateHeaderHeight);
+    
+    // Update when fonts load (can affect height)
+    document.fonts?.ready.then(updateHeaderHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeaderHeight);
+    };
+  }, []);
+
+  return { headerHeight, headerRef };
+}
 
 export default function Header() {
   const router = useRouter();
@@ -12,6 +44,7 @@ export default function Header() {
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { headerRef } = useHeaderHeight();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -23,7 +56,11 @@ export default function Header() {
   }, []);
 
   return (
-    <nav className="w-full flex items-center justify-between px-8 py-4 shadow-md fixed top-0 left-0 z-40 backdrop-blur" style={{ backgroundColor: '#FEEDD2' }}>
+    <nav 
+      ref={headerRef}
+      className="w-full flex items-center justify-between px-8 py-4 shadow-md fixed top-0 left-0 z-40 backdrop-blur" 
+      style={{ backgroundColor: '#FEEDD2' }}
+    >
       <div className="flex items-center ml-2">
         <Link href="/" className="flex items-center mr-2 sm:mr-4">
           <img

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { auth, db } from "../lib/firebase";
 import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, deleteUser } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import Header from "./components/Header";
+import Header, { useHeaderHeight } from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import ScreenshotsSection from "./components/ScreenshotsSection";
 import UserAccountSection from "./components/UserAccountSection";
@@ -17,6 +17,7 @@ export default function Home() {
   const [level, setLevel] = useState<any>(null);
   const [progressLoading, setProgressLoading] = useState(false);
   const [progressError, setProgressError] = useState("");
+  const { headerHeight } = useHeaderHeight();
 
   // Monitor authentication state
   useEffect(() => {
@@ -93,7 +94,9 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 flex flex-col items-center justify-center pt-4 px-4" style={{ height: 'calc(100vh - 112px)' }}>
+      <main 
+        className="h-full flex flex-col items-center justify-center px-4 pb-16" 
+      >
         {isLoading && (
           <div className="text-center py-8">
             <p className="text-[#7a4c15] text-lg">Loading...</p>
