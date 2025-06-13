@@ -61,12 +61,6 @@ export default function Header() {
               Sign-in
             </a>
           )}
-          
-          {isLoggedIn && (
-            <div className="text-sm sm:text-base font-medium text-[#7a4c15] px-2 sm:px-4 py-1 sm:py-2">
-              Account
-            </div>
-          )}
         </>
       )}
     </nav>

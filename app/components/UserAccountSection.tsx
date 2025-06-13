@@ -81,8 +81,8 @@ export default function UserAccountSection({ usage, level, onLogout }: UserAccou
   return (
     <div className="w-full max-w-2xl mx-auto bg-white/90 rounded-xl shadow-lg p-6 mb-8">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-[#7a4c15] mb-2">Your Account</h2>
-        <p className="text-gray-600">Welcome back! Here's your progress:</p>
+        <h2 className="text-2xl font-bold text-[#7a4c15] mb-2">Welcome {auth.currentUser?.email}</h2>
+        <p className="text-gray-600">Here's your progress:</p>
       </div>
 
       {/* Progress Section */}
