@@ -80,15 +80,15 @@ export default function Header() {
           <>
             <Link
               href="/"
-              className={`text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all
-                ${pathname === '/' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#f7ecd7] hover:text-[#a86c2c]'}`}
+              className={`text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-[#a86c2c]
+                text-[#7a4c15] hover:bg-[#d4b896] hover:text-[#7a4c15] focus:bg-[#d4b896] focus:text-[#7a4c15]`}
             >
               Home
             </Link>
             <Link
               href="/about"
-              className={`text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all
-                ${pathname === '/about' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#f7ecd7] hover:text-[#a86c2c]'}`}
+              className={`text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-[#a86c2c]
+                ${pathname === '/about' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#d4b896] hover:text-[#7a4c15] focus:bg-[#d4b896] focus:text-[#7a4c15]'}`}
             >
               About Us
             </Link>
@@ -101,8 +101,8 @@ export default function Header() {
           {!isLoggedIn && (
             <a
               href="/sign-in"
-              className={`ml-2 sm:ml-0 text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all
-                ${pathname === '/sign-in' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#f7ecd7] hover:text-[#a86c2c]'}`}
+              className={`ml-2 sm:ml-0 text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-[#a86c2c]
+                ${pathname === '/sign-in' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#d4b896] hover:text-[#7a4c15] focus:bg-[#d4b896] focus:text-[#7a4c15]'}`}
             >
               Sign-in
             </a>
