@@ -18,7 +18,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <button onClick={handleGoogleSignIn} className="focus:outline-none">
         <img src="/btn_google_signin_dark_normal_web.png" alt="Sign in with Google" className="h-10" />
       </button>

@@ -25,7 +25,28 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} min-h-screen pb-20`}>
         <Header />
-        {children}
+        <div
+          style={{
+            position: 'relative',
+            backgroundImage: 'url(/feature-graphic.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: 'calc(100vh - 112px)',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'white',
+              opacity: 0.9,
+              zIndex: 1,
+            }}
+          />
+          <div style={{ position: 'relative', zIndex: 2 }}>
+            {children}
+          </div>
+        </div>
         <Footer />
       </body>
     </html>
