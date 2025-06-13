@@ -2,22 +2,25 @@
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { auth } from "@/lib/firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Header() {
   const router = useRouter();
   let pathname = usePathname();
   if (pathname !== '/' && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
+  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      router.push("/"); // Redirect to home page after successful sign-in
-    } catch (error) {
-      console.error("Error signing in with Google:", error);
-    }
-  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <nav className="w-full flex items-center justify-between px-8 py-4 shadow-md fixed top-0 left-0 z-40 backdrop-blur" style={{ backgroundColor: '#FEEDD2' }}>
@@ -46,13 +49,26 @@ export default function Header() {
           About Us
         </Link>
       </div>
-      <a
-        href="/sign-in"
-        className={`ml-2 sm:ml-0 text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all
-          ${pathname === '/sign-in' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#f7ecd7] hover:text-[#a86c2c]'}`}
-      >
-        Sign-in
-      </a>
+      
+      {!loading && (
+        <>
+          {!isLoggedIn && (
+            <a
+              href="/sign-in"
+              className={`ml-2 sm:ml-0 text-sm sm:text-base font-medium px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-all
+                ${pathname === '/sign-in' ? 'bg-[#7a4c15] text-white' : 'text-[#7a4c15] hover:bg-[#f7ecd7] hover:text-[#a86c2c]'}`}
+            >
+              Sign-in
+            </a>
+          )}
+          
+          {isLoggedIn && (
+            <div className="text-sm sm:text-base font-medium text-[#7a4c15] px-2 sm:px-4 py-1 sm:py-2">
+              Account
+            </div>
+          )}
+        </>
+      )}
     </nav>
   );
 } 

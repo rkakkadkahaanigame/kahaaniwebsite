@@ -25,7 +25,31 @@ export default function ScreenshotsSection({ signInPage = false, handleGoogleSig
       <div className={`grid grid-cols-1 md:[grid-template-columns:10%_40%_40%_10%] items-center justify-center gap-2 md:gap-0 w-full h-[60vh] md:h-[70vh] min-h-[320px]`}>
         {/* Left blank column */}
         <div className="hidden md:block" />
-        {/* Carousel column */}
+        {/* Content column (now first) */}
+        <div className={`w-full md:col-span-1 h-full min-h-[320px] flex items-center justify-center`}>
+          {signInPage ? (
+            <button onClick={handleGoogleSignIn} className="focus:outline-none">
+              <img src="/btn_google_signin_dark_normal_web.png" alt="Sign in with Google" className="h-10" />
+            </button>
+          ) : (
+            <div className="grid w-full h-full" style={{ gridTemplateRows: '20% 60% 20%' }}>
+              <div className="flex items-end justify-center">
+                <span className="text-2xl md:text-4xl font-bold text-[#7a4c15] text-center">Kahaani Game</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <span className="text-lg text-center text-gray-700 mb-4 md:mb-8 min-h-[48px] flex items-center justify-center">{customTexts[current]}</span>
+              </div>
+              <div className="flex flex-col items-center justify-start min-h-[64px]">
+                <div className="flex justify-center items-end">
+                  <a href="https://play.google.com/store/apps/details?id=com.kahaanientertainment.kahaani" target="_blank" rel="noopener noreferrer">
+                    <img src="/google-play-badge.png" alt="Get it on Google Play" className="h-12 md:h-16" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        {/* Carousel column (now second) */}
         <div className="flex flex-col items-center justify-center w-full md:col-span-1 h-full">
           <div className="flex flex-row items-center justify-center w-full">
             <button
@@ -59,30 +83,6 @@ export default function ScreenshotsSection({ signInPage = false, handleGoogleSig
               />
             ))}
           </div>
-        </div>
-        {/* Right column: 3 rows or sign-in */}
-        <div className={`w-full md:col-span-1 h-full min-h-[320px] flex items-center justify-center`}>
-          {signInPage ? (
-            <button onClick={handleGoogleSignIn} className="focus:outline-none">
-              <img src="/btn_google_signin_dark_normal_web.png" alt="Sign in with Google" className="h-10" />
-            </button>
-          ) : (
-            <div className="grid w-full h-full" style={{ gridTemplateRows: '20% 60% 20%' }}>
-              <div className="flex items-end justify-center">
-                <span className="text-2xl md:text-4xl font-bold text-[#7a4c15] text-center">Kahaani Game</span>
-              </div>
-              <div className="flex items-center justify-center">
-                <span className="text-lg text-center text-gray-700 mb-4 md:mb-8 min-h-[48px] flex items-center justify-center">{customTexts[current]}</span>
-              </div>
-              <div className="flex flex-col items-center justify-start min-h-[64px]">
-                <div className="flex justify-center items-end">
-                  <a href="https://play.google.com/store/apps/details?id=com.kahaanientertainment.kahaani" target="_blank" rel="noopener noreferrer">
-                    <img src="/google-play-badge.png" alt="Get it on Google Play" className="h-12 md:h-16" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
         {/* Right blank column */}
         <div className="hidden md:block" />
